@@ -7,4 +7,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Application\" />
+      <Folder Include="Infrastructure\" />
+      <Folder Include="UI\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Spectre.Console" Version="0.50.1-preview.0.22" />
+    </ItemGroup>
+
 </Project>
