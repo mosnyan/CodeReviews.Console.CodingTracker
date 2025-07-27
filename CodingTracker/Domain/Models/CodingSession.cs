@@ -1,23 +1,21 @@
+using System.Text;
+
 namespace CodingTracker.Domain.Models;
 
 public class CodingSession
 {
-    public Guid Id { get; private set; }
-    public DateTime StartTime { get; private set; }
-    public DateTime StopTime { get; private set; }
-    public TimeSpan Duration => StopTime - StartTime;
-    public long GetStartTimestamp() => (long) (StartTime - DateTime.UnixEpoch).TotalMilliseconds;
-    public long GetStopTimeTimestamp() => (long)(StopTime - DateTime.UnixEpoch).TotalMilliseconds;
+    public Guid Id { get; init; }
+    public DateTime StartTime { get; init; }
+    public DateTime StopTime { get; init; }
 
+    public TimeSpan Duration => StopTime - StartTime;
+    
     public CodingSession(DateTime startTime, DateTime stopTime)
     {
         Id = Guid.NewGuid();
         StartTime = startTime;
         StopTime = stopTime;
-        if (Duration < TimeSpan.Zero)
-        {
-            throw new ArgumentException("Start time is after stop time!");
-        }
+        ValidateInvariants();
     }
 
     public CodingSession(Guid id, DateTime startTime, DateTime stopTime)
@@ -25,19 +23,61 @@ public class CodingSession
         Id = id;
         StartTime = startTime;
         StopTime = stopTime;
+        ValidateInvariants();
+    }
+
+    private void ValidateInvariants()
+    {
+        if (StartTime > DateTime.Now)
+        {
+            throw new ArgumentException("Start time is in the future!");
+        }
+        
         if (Duration < TimeSpan.Zero)
         {
             throw new ArgumentException("Start time is after stop time!");
+        }  
+    }
+
+    public static bool operator ==(CodingSession? c1, CodingSession? c2)
+    {
+        if (c1 is null)
+        {
+            return c2 is null;
         }
+
+        return c1.Equals(c2);
     }
 
-    public static bool operator ==(CodingSession c1, CodingSession c2)
+    public static bool operator !=(CodingSession? c1, CodingSession? c2)
     {
-        return c1.Id == c2.Id;
+        if (c1 is null)
+        {
+            return c2 is not null;
+        }
+
+        return !c1.Equals(c2);
     }
 
-    public static bool operator !=(CodingSession c1, CodingSession c2)
+    public override bool Equals(object? obj)
     {
-        return c1.Id != c2.Id;
+        if (obj is CodingSession other)
+        {
+            return Id == other.Id;
+        }
+
+        return false;
     }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine($"Coding session ID: {Id}");
+        sb.AppendLine($"Started at: {StartTime}");
+        sb.AppendLine($"Finished at: {StopTime}");
+        sb.AppendLine($"Duration: {Duration.Hours} hours");
+        return sb.ToString();
+    }
+
+    public override int GetHashCode() => Id.GetHashCode();
 }

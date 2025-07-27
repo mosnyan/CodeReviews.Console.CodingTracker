@@ -69,15 +69,17 @@ public class RepositoryTests
 
         _ = _sessionRepo.CreateSession(session);
 
+        var readSession = _sessionRepo.ReadSessionById(session.Id)!;
+
         CodingSession updatedSession = new(
-            session.Id,
-            session.StartTime,
-            session.StopTime.AddHours(2)
+            readSession.Id,
+            readSession.StartTime,
+            readSession.StopTime.AddHours(2)
         );
 
         _ = _sessionRepo.UpdateSession(updatedSession);
 
-        var readBack = _sessionRepo.ReadSessionById(session.Id);
+        var readBack = _sessionRepo.ReadSessionById(session.Id)!;
         
         Assert.That(session == readBack);
         Assert.That(readBack.Duration.Hours, Is.EqualTo(5));
