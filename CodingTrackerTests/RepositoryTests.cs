@@ -74,7 +74,7 @@ public class RepositoryTests
         CodingSession updatedSession = new(
             readSession.Id,
             readSession.StartTime,
-            readSession.StopTime.AddHours(2)
+            readSession.StopTime!.Value.AddHours(2)
         );
 
         _ = _sessionRepo.UpdateSession(updatedSession);

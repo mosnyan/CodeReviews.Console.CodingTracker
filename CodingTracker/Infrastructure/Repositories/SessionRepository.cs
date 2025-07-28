@@ -64,7 +64,7 @@ public class SessionRepository(string connectionString) : ISessionRepository
         return new CodingSession(
             Guid.Parse(row.id),
             DateTime.UnixEpoch.AddSeconds(row.start_time),
-            DateTime.UnixEpoch.AddSeconds(row.stop_time)
+            row.stop_time is null ? null : DateTime.UnixEpoch.AddSeconds(row.stop_time)
         );
     }
 
@@ -74,7 +74,8 @@ public class SessionRepository(string connectionString) : ISessionRepository
         {
             Id = session.Id.ToString(),
             StartTime = (long)(session.StartTime - DateTime.UnixEpoch).TotalSeconds,
-            StopTime = (long)(session.StopTime - DateTime.UnixEpoch).TotalSeconds
+            StopTime = session.StopTime is null ?
+                (long?)null : (long)(session.StopTime!.Value - DateTime.UnixEpoch).TotalSeconds
         };
     }
     

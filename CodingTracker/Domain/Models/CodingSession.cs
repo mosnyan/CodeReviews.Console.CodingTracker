@@ -6,11 +6,20 @@ public class CodingSession
 {
     public Guid Id { get; init; }
     public DateTime StartTime { get; init; }
-    public DateTime StopTime { get; init; }
+    public DateTime? StopTime { get; init; }
 
-    public TimeSpan Duration => StopTime - StartTime;
+    public TimeSpan Duration => StopTime is null ? DateTime.Now - StartTime : StopTime.Value - StartTime;
+
+    public bool Completed => StopTime is not null;
+
+    public CodingSession(DateTime startTime)
+    {
+        StartTime = startTime;
+        StopTime = null;
+        ValidateInvariants();
+    }
     
-    public CodingSession(DateTime startTime, DateTime stopTime)
+    public CodingSession(DateTime startTime, DateTime? stopTime)
     {
         Id = Guid.NewGuid();
         StartTime = startTime;
@@ -18,7 +27,7 @@ public class CodingSession
         ValidateInvariants();
     }
 
-    public CodingSession(Guid id, DateTime startTime, DateTime stopTime)
+    public CodingSession(Guid id, DateTime startTime, DateTime? stopTime)
     {
         Id = id;
         StartTime = startTime;
@@ -74,7 +83,14 @@ public class CodingSession
         var sb = new StringBuilder();
         sb.AppendLine($"Coding session ID: {Id}");
         sb.AppendLine($"Started at: {StartTime}");
-        sb.AppendLine($"Finished at: {StopTime}");
+        if (Completed)
+        {
+            sb.AppendLine($"Finished at: {StopTime}");
+        }
+        else
+        {
+            sb.AppendLine("Not finished yet.");
+        }
         sb.AppendLine($"Duration: {Duration.Hours} hours");
         return sb.ToString();
     }

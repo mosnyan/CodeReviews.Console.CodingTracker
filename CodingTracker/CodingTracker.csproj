@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="UI\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Dapper" Version="2.1.66" />
       <PackageReference Include="Spectre.Console" Version="0.50.1-preview.0.22" />
       <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />

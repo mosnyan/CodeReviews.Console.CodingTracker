@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingTracker", "CodingTrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingTrackerTests", "CodingTrackerTests\CodingTrackerTests.csproj", "{EC3549D1-AADD-4A73-81D9-28DFACB699C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadingConsoleTest", "ThreadingConsoleTest\ThreadingConsoleTest.csproj", "{FA4179A1-96DF-430B-BB03-FCFF174A195E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{EC3549D1-AADD-4A73-81D9-28DFACB699C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC3549D1-AADD-4A73-81D9-28DFACB699C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC3549D1-AADD-4A73-81D9-28DFACB699C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4179A1-96DF-430B-BB03-FCFF174A195E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4179A1-96DF-430B-BB03-FCFF174A195E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4179A1-96DF-430B-BB03-FCFF174A195E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4179A1-96DF-430B-BB03-FCFF174A195E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

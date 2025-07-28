@@ -1,3 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!");
+using CodingTracker.UI.Implementations;
+
+var view = new ConsoleView();
+view.DisplayHeader();
+view.GetOngoingSessionInfo();
