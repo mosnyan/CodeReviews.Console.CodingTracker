@@ -14,7 +14,7 @@ public class SessionRepository(string connectionString) : ISessionRepository
         return SqlMapper.Execute(connection, query, MapToDatabase(session)) > 0; 
     }
 
-    public IEnumerable<CodingSession> ReadSessions()
+    public IEnumerable<CodingSession> ReadAllSessions()
     {
         using var connection = new SQLiteConnection(connectionString);
         var query = "SELECT * FROM sessions";
@@ -56,6 +56,18 @@ public class SessionRepository(string connectionString) : ISessionRepository
             new
             {
                 Id = session.Id.ToString()
+            }) > 0;
+    }
+
+    public bool DeleteSessionById(Guid id)
+    {
+        using var connection = new SQLiteConnection(connectionString);
+        var query = "DELETE FROM sessions WHERE id = @Id";
+
+        return connection.Execute(query,
+            new
+            {
+                Id = id.ToString()
             }) > 0;
     }
 

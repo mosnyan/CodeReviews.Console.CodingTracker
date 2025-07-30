@@ -1,5 +1,6 @@
 using System.Globalization;
 using CodingTracker.Application.DTOs;
+using CodingTracker.Application.Services;
 using CodingTracker.UI.Abstractions;
 using Spectre.Console;
 
@@ -7,51 +8,116 @@ namespace CodingTracker.UI.Implementations;
 
 public class ConsoleView : IView
 {
-    private const string DateFormat = "yyyy/MM/dd hh:mm:ss";
+    private const string DateFormat = "yyyy/MM/dd HH:mm:ss";
     public void DisplayHeader()
     {
-        AnsiConsole.WriteLine("CLI Coding Session Tracker App");
+        AnsiConsole.Clear();
+        
+        AnsiConsole.WriteLine("<><><> CLI Coding Session Tracker <><><><><><><><>");
     }
 
-    public void DisplayMainMenuOptions(IEnumerable<string> options)
+    public string GetMainMenuOptions(IEnumerable<string> options)
     {
-        throw new NotImplementedException();
+        var opts = options.ToArray();
+        
+        return AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .PageSize(opts.Length)
+                .AddChoices(opts)
+            );
     }
 
     public DateTime GetOngoingSessionInfo()
     {
+        AnsiConsole.Clear();
+        
         AnsiConsole.WriteLine("Enter a date and time for the start of this session.");
         return GetDateFromUser();
     }
 
     public (DateTime, DateTime) GetCompletedSessionInfo()
     {
-        throw new NotImplementedException();
+        AnsiConsole.Clear();
+        
+        AnsiConsole.WriteLine("Enter a date and time for the start of this session.");
+        var start = GetDateFromUser();
+
+        AnsiConsole.WriteLine("Enter a date and time for the end of this session.");
+        var stop = GetDateFromUser();
+
+        return (start, stop);
     }
 
-    public DateTime GetSessionCompletionTime()
+    public int GetSessionIndex(IEnumerable<CodingSessionDto> sessions)
     {
-        throw new NotImplementedException();
+        var count = sessions.ToList().Count;
+        var entry = AnsiConsole.Prompt(
+            new TextPrompt<int>("Enter the selected session:")
+                .Validate(n =>
+                    {
+                        if (n <= 0 || n > count)
+                        {
+                            return ValidationResult.Error($"[red]Selection out of bounds (1..{count}).[/]");
+                        }
+
+                        return ValidationResult.Success();
+                    })
+            );
+         return entry - 1;
     }
 
-    public void DisplaySessions(IEnumerable<CodingSessionDto> habits)
+    public DateTime CompleteSession()
     {
-        throw new NotImplementedException();
+        AnsiConsole.WriteLine("Enter a date and time for the end of this session.");
+        var stop = GetDateFromUser();
+
+        return stop;
+    }
+
+    public void DisplayTime(TimeSpan time)
+    {
+        AnsiConsole.Cursor.SetPosition(0, 1);
+        AnsiConsole.Cursor.Show(false);
+        AnsiConsole.WriteLine(time.ToString());
+        AnsiConsole.WriteLine("Press a key to stop the stopwatch.");
+        
+    }
+
+    public bool StopStopwatch()
+    {
+        AnsiConsole.Clear();
+        while (!Console.KeyAvailable)
+        {
+            
+        }
+        _ = Console.ReadKey();
+        AnsiConsole.Cursor.SetPosition(0, 3);
+        AnsiConsole.WriteLine("Session completed!");
+        return true;
+    }
+
+    public void DisplaySessions(IEnumerable<CodingSessionDto> sessions)
+    {
+        AnsiConsole.Clear();
+        
+        int c = 0;
+        foreach (var session in sessions)
+        {
+            AnsiConsole.WriteLine($"Coding Session {++c}");
+            AnsiConsole.WriteLine(session + "\n");
+        }
     }
 
     public void DisplaySession(CodingSessionDto session)
     {
-        throw new NotImplementedException();
-    }
-
-    public int GetUserChoice()
-    {
-        throw new NotImplementedException();
+        AnsiConsole.Clear();
+        
+        AnsiConsole.WriteLine(session + "\n");
     }
 
     public void DisplayMessage(string message)
     {
-        throw new NotImplementedException();
+        AnsiConsole.WriteLine(message);
     }
 
     private DateTime GetDateFromUser()

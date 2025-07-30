@@ -7,20 +7,27 @@ namespace CodingTracker.Application.Services;
 public class SessionService(ISessionRepository repository)
 {
     
-    public bool CreateSession(CodingSessionDto dto)
+    public bool CreateOngoingSession(OngoingCodingSessionCreationDto dto)
     {
-        return repository.CreateSession(MapToModel(dto));
+        var session = new CodingSession(dto.StartTime);
+        return repository.CreateSession(session);
+    }
+
+    public bool CreateCompletedSession(CompletedCodingSessionCreationDto dto)
+    {
+        var session = new CodingSession(dto.StartTime, dto.StopTime);
+        return repository.CreateSession(session);
     }
     
     public IEnumerable<CodingSessionDto> ReadAllSessions()
     {
-        return repository.ReadSessions()
+        return repository.ReadAllSessions()
             .Select(MapToDto);
     }
 
     public IEnumerable<CodingSessionDto> ReadAllIncompleteSessions()
     {
-        return repository.ReadSessions()
+        return repository.ReadAllSessions()
             .Where(session => !session.Completed)
             .Select(MapToDto);
     }
@@ -37,26 +44,28 @@ public class SessionService(ISessionRepository repository)
         return MapToDto(session);
     }
 
-    public bool UpdateSession(CodingSessionDto dto)
+    public bool UpdateSession(CodingSessionDto editionDto)
     {
-        return repository.UpdateSession(MapToModel(dto));
+        var session = new CodingSession(
+            editionDto.Id,
+            editionDto.StartTime,
+            editionDto.StopTime
+            );
+        
+        return repository.UpdateSession(session);
     }
 
-    public bool DeleteSession(CodingSessionDto dto)
+    public bool DeleteSession(Guid id)
     {
-        return repository.DeleteSession(MapToModel(dto));
+        return repository.DeleteSessionById(id);
     }
 
     private CodingSessionDto MapToDto(CodingSession session)
     {
-        return new CodingSessionDto(session.StartTime,
+        return new CodingSessionDto(session.Id,
+                                    session.StartTime,
                                     session.StopTime,
                                     session.Duration);
     }
-
-    private CodingSession MapToModel(CodingSessionDto dto)
-    {
-        return new CodingSession(dto.StartTime,
-                                 dto.StopTime);
-    }
+    
 }

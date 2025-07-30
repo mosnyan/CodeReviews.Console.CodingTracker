@@ -14,6 +14,7 @@ public class CodingSession
 
     public CodingSession(DateTime startTime)
     {
+        Id = Guid.NewGuid();
         StartTime = startTime;
         StopTime = null;
         ValidateInvariants();

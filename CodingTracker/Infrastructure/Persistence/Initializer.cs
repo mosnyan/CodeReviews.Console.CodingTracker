@@ -17,7 +17,7 @@ public class Initializer(string connectionString)
         string query = "CREATE TABLE IF NOT EXISTS sessions" +
                        "(id TEXT PRIMARY KEY," +
                        "start_time INTEGER NOT NULL," +
-                       "stop_time INTEGER NOT NULL)";
+                       "stop_time INTEGER)";
         connection.Execute(query);
     }
 }

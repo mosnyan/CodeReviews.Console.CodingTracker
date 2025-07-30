@@ -39,7 +39,7 @@ public class RepositoryTests
         );
 
         _ = _sessionRepo.CreateSession(session);
-        var sessions = _sessionRepo.ReadSessions().ToList();
+        var sessions = _sessionRepo.ReadAllSessions().ToList();
         
         Assert.That(sessions.Count, Is.EqualTo(1));
     }
