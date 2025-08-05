@@ -85,7 +85,10 @@ public class ConsoleView : IView
     public bool StopStopwatch()
     {
         AnsiConsole.Clear();
-        while (!Console.KeyAvailable);
+        while (!Console.KeyAvailable)
+        {
+            Thread.Sleep(100);
+        }
         _ = Console.ReadKey();
         AnsiConsole.Cursor.SetPosition(0, 3);
         AnsiConsole.WriteLine("Session completed!");
@@ -100,7 +103,7 @@ public class ConsoleView : IView
         foreach (var session in sessions)
         {
             AnsiConsole.WriteLine($"Coding Session {++c}");
-            AnsiConsole.WriteLine(session + "\n");
+            AnsiConsole.WriteLine(session.ToString());
         }
     }
 
