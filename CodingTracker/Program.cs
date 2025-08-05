@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Configuration;
 using CodingTracker.Application.Abstractions.Repositories;
 using CodingTracker.Application.Services;
 using CodingTracker.Infrastructure.Persistence;
@@ -7,7 +8,7 @@ using CodingTracker.Infrastructure.Repositories;
 using CodingTracker.UI.Abstractions;
 using CodingTracker.UI.Controllers;
 using CodingTracker.UI.Implementations;
-using System.Configuration;
+
 
 var path = ConfigurationManager.AppSettings.Get("database_path");
 

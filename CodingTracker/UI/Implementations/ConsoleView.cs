@@ -85,10 +85,7 @@ public class ConsoleView : IView
     public bool StopStopwatch()
     {
         AnsiConsole.Clear();
-        while (!Console.KeyAvailable)
-        {
-            
-        }
+        while (!Console.KeyAvailable);
         _ = Console.ReadKey();
         AnsiConsole.Cursor.SetPosition(0, 3);
         AnsiConsole.WriteLine("Session completed!");
