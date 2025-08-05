@@ -7,8 +7,11 @@ using CodingTracker.Infrastructure.Repositories;
 using CodingTracker.UI.Abstractions;
 using CodingTracker.UI.Controllers;
 using CodingTracker.UI.Implementations;
+using System.Configuration;
 
-const string connectionString = "Data Source = sessiondb";
+var path = ConfigurationManager.AppSettings.Get("database_path");
+
+string connectionString = $"Data Source = {path}";
 Initializer initializer = new Initializer(connectionString);
 ISessionRepository repository = new SessionRepository(connectionString);
 

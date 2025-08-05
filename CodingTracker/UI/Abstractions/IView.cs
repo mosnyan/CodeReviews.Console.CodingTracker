@@ -5,14 +5,15 @@ namespace CodingTracker.UI.Abstractions;
 public interface IView
 {
     public void DisplayHeader();
-    public string GetMainMenuOptions(IEnumerable<string> options);
+    public string GetMenuOption(IReadOnlyList<string> options);
     public DateTime GetOngoingSessionInfo();
     public (DateTime, DateTime) GetCompletedSessionInfo();
-    public int GetSessionIndex(IEnumerable<CodingSessionDto> sessions);
+    public int GetSessionIndex(IReadOnlyList<CodingSessionDto> sessions);
     public DateTime CompleteSession();
-    public void DisplayTime(TimeSpan time);
+    public void DisplayStopwatchTime(TimeSpan time);
     public bool StopStopwatch();
-    public void DisplaySessions(IEnumerable<CodingSessionDto> sessions);
+    public void DisplaySessions(IReadOnlyList<CodingSessionDto> sessions);
     public void DisplaySession(CodingSessionDto session);
+    public void DisplayCodingTime(TimeSpan time, string timeSpan);
     public void DisplayMessage(string message);
 }

@@ -42,6 +42,11 @@ public class CodingSession
         {
             throw new ArgumentException("Start time is in the future!");
         }
+
+        if (StopTime > DateTime.Now)
+        {
+            throw new ArgumentException("Stop time is in the future!");
+        }
         
         if (Duration < TimeSpan.Zero)
         {

@@ -1,6 +1,5 @@
 using System.Globalization;
 using CodingTracker.Application.DTOs;
-using CodingTracker.Application.Services;
 using CodingTracker.UI.Abstractions;
 using Spectre.Console;
 
@@ -16,7 +15,7 @@ public class ConsoleView : IView
         AnsiConsole.WriteLine("<><><> CLI Coding Session Tracker <><><><><><><><>");
     }
 
-    public string GetMainMenuOptions(IEnumerable<string> options)
+    public string GetMenuOption(IReadOnlyList<string> options)
     {
         var opts = options.ToArray();
         
@@ -48,7 +47,7 @@ public class ConsoleView : IView
         return (start, stop);
     }
 
-    public int GetSessionIndex(IEnumerable<CodingSessionDto> sessions)
+    public int GetSessionIndex(IReadOnlyList<CodingSessionDto> sessions)
     {
         var count = sessions.ToList().Count;
         var entry = AnsiConsole.Prompt(
@@ -74,7 +73,7 @@ public class ConsoleView : IView
         return stop;
     }
 
-    public void DisplayTime(TimeSpan time)
+    public void DisplayStopwatchTime(TimeSpan time)
     {
         AnsiConsole.Cursor.SetPosition(0, 1);
         AnsiConsole.Cursor.Show(false);
@@ -96,7 +95,7 @@ public class ConsoleView : IView
         return true;
     }
 
-    public void DisplaySessions(IEnumerable<CodingSessionDto> sessions)
+    public void DisplaySessions(IReadOnlyList<CodingSessionDto> sessions)
     {
         AnsiConsole.Clear();
         
@@ -113,6 +112,11 @@ public class ConsoleView : IView
         AnsiConsole.Clear();
         
         AnsiConsole.WriteLine(session + "\n");
+    }
+
+    public void DisplayCodingTime(TimeSpan time, string timeSpan)
+    {
+        AnsiConsole.WriteLine($"You have coded for {time} {timeSpan}.");
     }
 
     public void DisplayMessage(string message)

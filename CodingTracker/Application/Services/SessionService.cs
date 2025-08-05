@@ -32,6 +32,13 @@ public class SessionService(ISessionRepository repository)
             .Select(MapToDto);
     }
 
+    public IEnumerable<CodingSessionDto> ReadAllSessionsBetweenDates(DateTime start, DateTime stop)
+    {
+        return repository.ReadAllSessions()
+            .Where(session => session.StartTime >= start && session.StopTime <= stop)
+            .Select(MapToDto);
+    }
+
     public CodingSessionDto ReadSessionById(Guid id)
     {
         var session = repository.ReadSessionById(id);

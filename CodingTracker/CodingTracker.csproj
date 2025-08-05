@@ -10,6 +10,7 @@
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.1.66" />
       <PackageReference Include="Spectre.Console" Version="0.50.1-preview.0.22" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.0-preview.6.25358.103" />
       <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
     </ItemGroup>
 
