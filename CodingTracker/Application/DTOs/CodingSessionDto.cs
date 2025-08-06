@@ -16,7 +16,7 @@ public record CodingSessionDto(Guid Id, DateTime StartTime, DateTime? StopTime, 
     {
       sb.AppendLine("Not finished yet.");
     }
-    sb.AppendLine($"Duration: {Duration:hh\\:mm\\:ss}");
+    sb.AppendLine($"Duration: {Duration:ddd' days 'hh' hrs 'mm' mins 'ss' secs '}");
     return sb.ToString();
   }
 }
